@@ -1,0 +1,350 @@
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 12099
+Session data corrupted
+"GET /admin/ HTTP/1.1" 302 0
+Session data corrupted
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4209
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/login.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+Session data corrupted
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 6180
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ernane\pets\condopets\pets\views.py", line 23, in home
+    return render(request, 'pets/home.html', context)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pets/home.html
+"GET / HTTP/1.1" 500 83666
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7139
+"GET / HTTP/1.1" 200 7139
+"GET /perdidos/ HTTP/1.1" 200 4767
+"GET /meus-animais/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /cadastrar-animal/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /cadastrar-animal/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /meus-animais/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET / HTTP/1.1" 200 7139
+"GET /perdidos/ HTTP/1.1" 200 4767
+"GET / HTTP/1.1" 200 7139
+"GET /meus-animais/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /cadastrar-animal/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /cadastrar-animal/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /meus-animais/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7443
+"GET /admin/ HTTP/1.1" 200 10354
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /admin/pets/morador/add/ HTTP/1.1" 200 16639
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/css/widgets.css HTTP/1.1" 200 11991
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /admin/pets/condominio/ HTTP/1.1" 200 10985
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /admin/pets/condominio/add/ HTTP/1.1" 200 13345
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"POST /admin/pets/condominio/add/ HTTP/1.1" 200 13767
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"POST /admin/pets/condominio/add/ HTTP/1.1" 302 0
+"GET /admin/pets/condominio/ HTTP/1.1" 200 13124
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /admin/pets/morador/ HTTP/1.1" 200 11635
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"GET /admin/pets/morador/add/ HTTP/1.1" 200 16688
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"POST /admin/pets/morador/add/ HTTP/1.1" 302 0
+"GET /admin/pets/morador/ HTTP/1.1" 200 13964
+"GET /admin/jsi18n/ HTTP/1.1" 200 8913
+"GET / HTTP/1.1" 200 7139
+"GET /cadastrar-animal/ HTTP/1.1" 200 5066
+"GET / HTTP/1.1" 200 7139
+"GET /meus-animais/ HTTP/1.1" 200 4937
+"GET /cadastrar-animal/ HTTP/1.1" 200 5066
+"GET /cadastrar-animal/ HTTP/1.1" 200 5066
+"GET /meus-animais/ HTTP/1.1" 200 4937
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7139
+"GET /cadastrar-animal/ HTTP/1.1" 200 11351
+"POST /cadastrar-animal/ HTTP/1.1" 302 0
+"GET /meus-animais/ HTTP/1.1" 200 6134
+"GET /media/animais/pub.jpg HTTP/1.1" 200 5889
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 5948
+"GET /perdidos/?tipo=&search= HTTP/1.1" 200 5948
+"GET /perdidos/?tipo=cao&search= HTTP/1.1" 200 5936
+"GET /perdidos/?tipo=cao&search= HTTP/1.1" 200 5936
+"GET / HTTP/1.1" 200 7139
+"GET /perdidos/ HTTP/1.1" 200 5948
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /reportar-perdido/1/ HTTP/1.1" 200 5202
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7139
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /reportar-perdido/1/ HTTP/1.1" 200 10510
+"GET /perdidos/ HTTP/1.1" 200 5948
+"GET /perdidos/?tipo=cao&search= HTTP/1.1" 200 5936
+"GET /perdidos/?tipo=cao&search= HTTP/1.1" 200 5936
+"GET /perdidos/?tipo=cao&search= HTTP/1.1" 200 5936
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /reportar-perdido/1/ HTTP/1.1" 200 10510
+"POST /reportar-perdido/1/ HTTP/1.1" 302 0
+"GET /perdidos/1/ HTTP/1.1" 200 10314
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 7473
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /perdidos/ HTTP/1.1" 200 7473
+"GET / HTTP/1.1" 200 8491
+"GET /meus-animais/ HTTP/1.1" 200 5853
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8492
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+"GET /meus-animais/ HTTP/1.1" 200 5854
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+"GET / HTTP/1.1" 200 7906
+"GET /media/animais/pub.jpg HTTP/1.1" 200 5889
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 5429
+"GET /register/ HTTP/1.1" 200 9795
+"GET /accounts/login/ HTTP/1.1" 200 5877
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8492
+Method Not Allowed (GET): /accounts/logout/
+Method Not Allowed: /accounts/logout/
+"GET /accounts/logout/ HTTP/1.1" 405 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8822
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"POST /logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8185
+"GET /perdidos/ HTTP/1.1" 200 6989
+"GET /accounts/login/login/ HTTP/1.1" 200 6156
+"GET /register/ HTTP/1.1" 200 10080
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8185
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /register/ HTTP/1.1" 200 10080
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8185
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /register/ HTTP/1.1" 200 11591
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8248
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /static/css/upload-pt.css HTTP/1.1" 200 1808
+"GET /register/ HTTP/1.1" 200 14981
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+Internal Server Error: /register/
+Traceback (most recent call last):
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table pets_morador has no column named tipo_residencia
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ernane\pets\condopets\pets\views.py", line 36, in register
+    morador.save()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\ernane\pets\condopets\pets\models.py", line 62, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1864, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ernane\AppData\Roaming\Python\Python313\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table pets_morador has no column named tipo_residencia
+"POST /register/ HTTP/1.1" 500 161051
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8248
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /register/ HTTP/1.1" 200 14900
+"POST /register/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 9173
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /meus-animais/ HTTP/1.1" 200 5411
+"GET /cadastrar-animal/ HTTP/1.1" 200 12724
+"POST /cadastrar-animal/ HTTP/1.1" 302 0
+"GET /meus-animais/ HTTP/1.1" 200 6543
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /media/animais/images.jpg HTTP/1.1" 200 2864
+"GET /meus-animais/ HTTP/1.1" 200 6261
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /media/animais/images.jpg HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 8894
+"GET /meus-animais/ HTTP/1.1" 200 6261
+"GET /register/ HTTP/1.1" 200 15724
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /meus-animais/ HTTP/1.1" 200 6261
+"GET /media/animais/images.jpg HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 8894
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /cadastrar-animal/ HTTP/1.1" 200 12724
+"GET / HTTP/1.1" 200 8894
+"GET / HTTP/1.1" 200 8894
+"GET /static/css/upload-pt.css HTTP/1.1" 304 0
+"GET /media/animais/pub.jpg HTTP/1.1" 304 0
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET /meus-animais/ HTTP/1.1" 200 6261
+"GET /media/animais/images.jpg HTTP/1.1" 304 0
+"GET /cadastrar-animal/ HTTP/1.1" 200 12724
+"GET /cadastrar-animal/ HTTP/1.1" 200 12724
+"GET /meus-animais/ HTTP/1.1" 200 6261
+"GET /perdidos/ HTTP/1.1" 200 7876
+"GET / HTTP/1.1" 200 8894
+"POST /logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8248
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4209
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/login.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"POST /admin/login/?next=/admin/ HTTP/1.1" 200 4403
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 11110
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0

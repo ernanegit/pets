@@ -1,0 +1,65 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Meus Animais - CondoPets{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-paw me-2"></i>Meus Animais</h2>
+            <a href="{% url 'cadastrar_animal' %}" class="btn btn-pet">
+                <i class="fas fa-plus me-2"></i>Cadastrar Animal
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if animais %}
+<div class="row">
+    {% for animal in animais %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card pet-card">
+            {% if animal.foto %}
+            <img src="{{ animal.foto.url }}" class="card-img-top pet-photo" alt="{{ animal.nome }}">
+            {% else %}
+            <div class="pet-photo bg-light d-flex align-items-center justify-content-center">
+                <i class="fas fa-paw fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ animal.nome }}</h5>
+                <p class="card-text">
+                    <span class="badge bg-primary me-1">{{ animal.get_tipo_display }}</span>
+                    <span class="badge bg-secondary me-1">{{ animal.get_sexo_display }}</span>
+                    <span class="badge bg-info">{{ animal.get_porte_display }}</span>
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        {% if animal.raca %}{{ animal.raca }} • {% endif %}
+                        {{ animal.idade_aproximada }} ano{{ animal.idade_aproximada|pluralize }}
+                    </small>
+                </p>
+                <div class="btn-group w-100" role="group">
+                    <a href="{% url 'animal_detail' animal.pk %}" class="btn btn-outline-primary">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="{% url 'reportar_perdido' animal.pk %}" class="btn btn-outline-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Perdido
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-paw fa-5x text-muted mb-4"></i>
+    <h4>Você ainda não cadastrou nenhum animal</h4>
+    <p class="text-muted mb-4">Comece cadastrando seus pets para usar todas as funcionalidades do sistema</p>
+    <a href="{% url 'cadastrar_animal' %}" class="btn btn-pet btn-lg">
+        <i class="fas fa-plus me-2"></i>Cadastrar Primeiro Animal
+    </a>
+</div>
+{% endif %}
+{% endblock %}

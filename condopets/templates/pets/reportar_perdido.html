@@ -1,0 +1,135 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Reportar Animal Perdido - {{ animal.nome }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Reportar Animal Perdido
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Atenção:</strong> Você está reportando que {{ animal.nome }} está perdido. 
+                    Esta informação será compartilhada com todos os moradores do condomínio.
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        {% if animal.foto %}
+                        <img src="{{ animal.foto.url }}" class="img-fluid rounded" alt="{{ animal.nome }}">
+                        {% else %}
+                        <div class="bg-light rounded p-3 text-center">
+                            <i class="fas fa-paw fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <h5>{{ animal.nome }}</h5>
+                        <p>
+                            <span class="badge bg-primary me-1">{{ animal.get_tipo_display }}</span>
+                            {% if animal.raca %}
+                            <span class="badge bg-secondary me-1">{{ animal.raca }}</span>
+                            {% endif %}
+                            <span class="badge bg-info">{{ animal.cor }}</span>
+                        </p>
+                        {% if animal.caracteristicas %}
+                        <p class="text-muted">{{ animal.caracteristicas|truncatechars:100 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Data e Hora da Perda <span class="text-danger">*</span></label>
+                                {{ form.data_perda }}
+                                {% if form.data_perda.errors %}
+                                    <div class="text-danger small">{{ form.data_perda.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Local da Perda <span class="text-danger">*</span></label>
+                                {{ form.local_perda }}
+                                {% if form.local_perda.errors %}
+                                    <div class="text-danger small">{{ form.local_perda.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Descrição das Circunstâncias <span class="text-danger">*</span></label>
+                        {{ form.descricao }}
+                        <small class="form-text text-muted">Descreva como o animal se perdeu, comportamento, etc.</small>
+                        {% if form.descricao.errors %}
+                            <div class="text-danger small">{{ form.descricao.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Recompensa (R$) - Opcional</label>
+                                {{ form.recompensa }}
+                                <small class="form-text text-muted">Valor da recompensa para quem encontrar</small>
+                                {% if form.recompensa.errors %}
+                                    <div class="text-danger small">{{ form.recompensa.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Contato de Emergência</label>
+                                {{ form.contato_emergencia }}
+                                <small class="form-text text-muted">Nome de pessoa para contato</small>
+                                {% if form.contato_emergencia.errors %}
+                                    <div class="text-danger small">{{ form.contato_emergencia.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">WhatsApp</label>
+                        {{ form.whatsapp }}
+                        <small class="form-text text-muted">Número do WhatsApp para contato rápido</small>
+                        {% if form.whatsapp.errors %}
+                            <div class="text-danger small">{{ form.whatsapp.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>O que acontece depois:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>Todos os moradores do condomínio receberão uma notificação</li>
+                            <li>O animal aparecerá na lista de "Animais Perdidos"</li>
+                            <li>Outros moradores poderão reportar avistamentos</li>
+                            <li>Você receberá notificações sobre avistamentos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'meus_animais' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-exclamation-triangle me-1"></i>Reportar como Perdido
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

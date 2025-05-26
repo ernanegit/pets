@@ -1,0 +1,139 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ animal.nome }} - Detalhes do Animal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-paw me-2"></i>{{ animal.nome }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if animal.foto %}
+                        <img src="{{ animal.foto.url }}" class="img-fluid rounded mb-3" alt="{{ animal.nome }}">
+                        {% else %}
+                        <div class="bg-light rounded p-5 text-center mb-3">
+                            <i class="fas fa-paw fa-5x text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Informações Básicas</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Tipo:</strong></td>
+                                <td>{{ animal.get_tipo_display }}</td>
+                            </tr>
+                            {% if animal.raca %}
+                            <tr>
+                                <td><strong>Raça:</strong></td>
+                                <td>{{ animal.raca }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td><strong>Cor:</strong></td>
+                                <td>{{ animal.cor }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sexo:</strong></td>
+                                <td>{{ animal.get_sexo_display }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Porte:</strong></td>
+                                <td>{{ animal.get_porte_display }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Idade:</strong></td>
+                                <td>{{ animal.idade_aproximada }} ano{{ animal.idade_aproximada|pluralize }}</td>
+                            </tr>
+                        </table>
+                        
+                        <h5 class="mt-4">Status de Saúde</h5>
+                        <p>
+                            {% if animal.vacinado %}
+                            <span class="badge bg-success me-1">Vacinado</span>
+                            {% else %}
+                            <span class="badge bg-warning me-1">Não Vacinado</span>
+                            {% endif %}
+                            
+                            {% if animal.castrado %}
+                            <span class="badge bg-success">Castrado</span>
+                            {% else %}
+                            <span class="badge bg-warning">Não Castrado</span>
+                            {% endif %}
+                        </p>
+                        
+                        {% if animal.microchip %}
+                        <p><strong>Microchip:</strong> {{ animal.microchip }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if animal.caracteristicas %}
+                <div class="alert alert-info mt-3">
+                    <strong>Características:</strong> {{ animal.caracteristicas }}
+                </div>
+                {% endif %}
+                
+                {% if animal.observacoes %}
+                <div class="alert alert-secondary mt-3">
+                    <strong>Observações:</strong> {{ animal.observacoes }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Proprietário</h5>
+            </div>
+            <div class="card-body">
+                {% if animal.proprietario.foto_perfil %}
+                <img src="{{ animal.proprietario.foto_perfil.url }}" class="rounded-circle mb-3" 
+                     width="80" height="80" alt="Foto do proprietário">
+                {% endif %}
+                <h6>{{ animal.proprietario.user.get_full_name }}</h6>
+                <p class="text-muted">{{ animal.proprietario.get_tipo_residencia_display }} {{ animal.proprietario.numero_residencia }}</p>
+                {% if animal.proprietario.telefone %}
+                <p><i class="fas fa-phone me-1"></i>{{ animal.proprietario.telefone }}</p>
+                {% endif %}
+                <p><i class="fas fa-envelope me-1"></i>{{ animal.proprietario.user.email }}</p>
+            </div>
+        </div>
+        
+        {% if user == animal.proprietario.user %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'reportar_perdido' animal.pk %}" class="btn btn-danger">
+                        <i class="fas fa-exclamation-triangle me-1"></i>Reportar como Perdido
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        {% if user == animal.proprietario.user %}
+        <a href="{% url 'meus_animais' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Voltar para Meus Animais
+        </a>
+        {% else %}
+        <a href="{% url 'home' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Voltar ao Início
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

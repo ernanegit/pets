@@ -1,0 +1,131 @@
+﻿{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-primary text-white rounded p-5 mb-4" style="background: linear-gradient(135deg, #667eea, #764ba2) !important;">
+            <h1 class="display-4">
+                <i class="fas fa-home me-3"></i>Bem-vindo ao CondoPets!
+            </h1>
+            <p class="lead">Sistema completo para gestão de animais em condomínios residenciais</p>
+            <hr class="my-4">
+            <p>Cadastre seus pets, reporte animais perdidos e ajude a comunidade!</p>
+            {% if not user.is_authenticated %}
+            <a class="btn btn-light btn-lg" href="{% url 'register' %}" role="button">
+                <i class="fas fa-user-plus me-2"></i>Cadastre-se Agora
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-paw fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">{{ total_animais }}</h5>
+                <p class="card-text text-muted">Animais Cadastrados</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-search fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">{{ total_perdidos }}</h5>
+                <p class="card-text text-muted">Animais Perdidos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Comunidade</h5>
+                <p class="card-text text-muted">Moradores Conectados</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if total_perdidos > 0 %}
+<div class="lost-pet-banner">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h3><i class="fas fa-exclamation-triangle me-2"></i>Animais Perdidos Recentemente</h3>
+            <p class="mb-0">Ajude nossa comunidade! Veja se você avistou algum destes animais.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'animais_perdidos' %}" class="btn btn-light btn-lg">
+                Ver Todos <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% for perdido in animais_perdidos %}
+    <div class="col-md-4 mb-4">
+        <div class="card pet-card">
+            <div class="position-relative">
+                {% if perdido.animal.foto %}
+                <img src="{{ perdido.animal.foto.url }}" class="card-img-top pet-photo" alt="{{ perdido.animal.nome }}">
+                {% else %}
+                <div class="pet-photo bg-light d-flex align-items-center justify-content-center">
+                    <i class="fas fa-paw fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <span class="badge bg-danger status-badge">PERDIDO</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ perdido.animal.nome }}</h5>
+                <p class="card-text">
+                    <small class="text-muted">
+                        <i class="fas fa-map-marker-alt me-1"></i>{{ perdido.local_perda }}
+                        <br>
+                        <i class="fas fa-clock me-1"></i>{{ perdido.data_perda|timesince }} atrás
+                    </small>
+                </p>
+                <div class="d-grid">
+                    <a href="{% url 'animal_perdido_detail' perdido.pk %}" class="btn btn-outline-danger">
+                        <i class="fas fa-eye me-1"></i>Ver Detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-success text-center">
+    <i class="fas fa-check-circle fa-2x mb-3"></i>
+    <h4>Ótimas notícias!</h4>
+    <p class="mb-0">Não há animais perdidos no momento. Nossa comunidade está segura! 🎉</p>
+</div>
+{% endif %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Como Funciona?</h3>
+        <div class="row mt-4">
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                <h5>1. Cadastre-se</h5>
+                <p class="text-muted">Crie sua conta e informe seus dados de morador</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-paw fa-3x text-primary mb-3"></i>
+                <h5>2. Cadastre seus Pets</h5>
+                <p class="text-muted">Registre todos os seus animais com fotos e informações</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                <h5>3. Ajude a Comunidade</h5>
+                <p class="text-muted">Reporte animais perdidos e avistamentos</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

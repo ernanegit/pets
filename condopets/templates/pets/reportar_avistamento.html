@@ -1,0 +1,115 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Reportar Avistamento - {{ perdido.animal.nome }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Reportar Avistamento - {{ perdido.animal.nome }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <strong>Importante:</strong> Só reporte se você realmente viu este animal. 
+                    Informações falsas podem atrapalhar a busca.
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        {% if perdido.animal.foto %}
+                        <img src="{{ perdido.animal.foto.url }}" class="img-fluid rounded" alt="{{ perdido.animal.nome }}">
+                        {% else %}
+                        <div class="bg-light rounded p-3 text-center">
+                            <i class="fas fa-paw fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <h5>{{ perdido.animal.nome }}</h5>
+                        <p>
+                            <span class="badge bg-primary me-1">{{ perdido.animal.get_tipo_display }}</span>
+                            {% if perdido.animal.raca %}
+                            <span class="badge bg-secondary me-1">{{ perdido.animal.raca }}</span>
+                            {% endif %}
+                            <span class="badge bg-info">{{ perdido.animal.cor }}</span>
+                        </p>
+                        <p class="text-muted">
+                            Perdido em {{ perdido.local_perda }} em {{ perdido.data_perda|date:"d/m/Y" }}
+                        </p>
+                    </div>
+                </div>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Local do Avistamento <span class="text-danger">*</span></label>
+                                {{ form.local }}
+                                {% if form.local.errors %}
+                                    <div class="text-danger small">{{ form.local.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Data e Hora do Avistamento <span class="text-danger">*</span></label>
+                                {{ form.data_avistamento }}
+                                {% if form.data_avistamento.errors %}
+                                    <div class="text-danger small">{{ form.data_avistamento.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Descrição do Avistamento <span class="text-danger">*</span></label>
+                        {{ form.descricao }}
+                        <small class="form-text text-muted">Descreva o que você viu, comportamento do animal, etc.</small>
+                        {% if form.descricao.errors %}
+                            <div class="text-danger small">{{ form.descricao.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Foto (se tiver)</label>
+                        {{ form.foto }}
+                        <small class="form-text text-muted">Adicione uma foto se conseguiu fotografar o animal</small>
+                        {% if form.foto.errors %}
+                            <div class="text-danger small">{{ form.foto.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Seu Contato (opcional)</label>
+                        {{ form.contato }}
+                        <small class="form-text text-muted">Telefone ou WhatsApp para o proprietário entrar em contato</small>
+                        {% if form.contato.errors %}
+                            <div class="text-danger small">{{ form.contato.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <i class="fas fa-heart me-2"></i>
+                        <strong>Obrigado por ajudar!</strong> Seu avistamento será imediatamente enviado ao proprietário do animal.
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'animal_perdido_detail' perdido.pk %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-map-marker-alt me-1"></i>Reportar Avistamento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
