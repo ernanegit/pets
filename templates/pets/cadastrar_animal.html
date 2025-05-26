@@ -1,0 +1,187 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Cadastrar Animal - CondoPets
+<script>
+function updateAnimalPhoto(input) {
+    const fileInfo = document.getElementById('animal-file-info');
+    
+    if (input.files && input.files[0]) {
+        const fileName = input.files[0].name;
+        const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2);
+        
+        fileInfo.innerHTML = `<i class="fas fa-check-circle me-1 text-success"></i>${fileName} (${fileSize} MB)`;
+        fileInfo.style.color = '#28a745';
+    } else {
+        fileInfo.innerHTML = 'Nenhuma foto selecionada';
+        fileInfo.style.color = '#6c757d';
+    }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-paw me-2"></i>Cadastrar Novo Animal</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nome do Animal</label>
+                                {{ form.nome }}
+                                {% if form.nome.errors %}
+                                    <div class="text-danger small">{{ form.nome.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Tipo</label>
+                                {{ form.tipo }}
+                                {% if form.tipo.errors %}
+                                    <div class="text-danger small">{{ form.tipo.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Raça</label>
+                                {{ form.raca }}
+                                {% if form.raca.errors %}
+                                    <div class="text-danger small">{{ form.raca.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Cor</label>
+                                {{ form.cor }}
+                                {% if form.cor.errors %}
+                                    <div class="text-danger small">{{ form.cor.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Sexo</label>
+                                {{ form.sexo }}
+                                {% if form.sexo.errors %}
+                                    <div class="text-danger small">{{ form.sexo.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Porte</label>
+                                {{ form.porte }}
+                                {% if form.porte.errors %}
+                                    <div class="text-danger small">{{ form.porte.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Idade (anos)</label>
+                                {{ form.idade_aproximada }}
+                                {% if form.idade_aproximada.errors %}
+                                    <div class="text-danger small">{{ form.idade_aproximada.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Foto</label>
+                        {{ form.foto }}
+                        {% if form.foto.errors %}
+                            <div class="text-danger small">{{ form.foto.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Características</label>
+                        {{ form.caracteristicas }}
+                        {% if form.caracteristicas.errors %}
+                            <div class="text-danger small">{{ form.caracteristicas.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Microchip</label>
+                        {{ form.microchip }}
+                        {% if form.microchip.errors %}
+                            <div class="text-danger small">{{ form.microchip.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mb-3">
+                                {{ form.vacinado }}
+                                <label class="form-check-label" for="{{ form.vacinado.id_for_label }}">
+                                    Vacinado
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check mb-3">
+                                {{ form.castrado }}
+                                <label class="form-check-label" for="{{ form.castrado.id_for_label }}">
+                                    Castrado
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Observações</label>
+                        {{ form.observacoes }}
+                        {% if form.observacoes.errors %}
+                            <div class="text-danger small">{{ form.observacoes.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'meus_animais' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-1"></i>Voltar
+                        </a>
+                        <button type="submit" class="btn btn-pet">
+                            <i class="fas fa-save me-1"></i>Cadastrar Animal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateAnimalPhoto(input) {
+    const fileInfo = document.getElementById('animal-file-info');
+    
+    if (input.files && input.files[0]) {
+        const fileName = input.files[0].name;
+        const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2);
+        
+        fileInfo.innerHTML = `<i class="fas fa-check-circle me-1 text-success"></i>${fileName} (${fileSize} MB)`;
+        fileInfo.style.color = '#28a745';
+    } else {
+        fileInfo.innerHTML = 'Nenhuma foto selecionada';
+        fileInfo.style.color = '#6c757d';
+    }
+}
+</script>
+{% endblock %}
+

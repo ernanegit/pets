@@ -1,0 +1,198 @@
+﻿{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ perdido.animal.nome }} - Animal Perdido{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ perdido.animal.nome }} está perdido!
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if perdido.animal.foto %}
+                        <img src="{{ perdido.animal.foto.url }}" class="img-fluid rounded mb-3" alt="{{ perdido.animal.nome }}">
+                        {% else %}
+                        <div class="bg-light rounded p-5 text-center mb-3">
+                            <i class="fas fa-paw fa-5x text-muted"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Informações do Animal</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Nome:</strong></td>
+                                <td>{{ perdido.animal.nome }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tipo:</strong></td>
+                                <td>{{ perdido.animal.get_tipo_display }}</td>
+                            </tr>
+                            {% if perdido.animal.raca %}
+                            <tr>
+                                <td><strong>Raça:</strong></td>
+                                <td>{{ perdido.animal.raca }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td><strong>Cor:</strong></td>
+                                <td>{{ perdido.animal.cor }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sexo:</strong></td>
+                                <td>{{ perdido.animal.get_sexo_display }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Porte:</strong></td>
+                                <td>{{ perdido.animal.get_porte_display }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Idade:</strong></td>
+                                <td>{{ perdido.animal.idade_aproximada }} ano{{ perdido.animal.idade_aproximada|pluralize }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h5>Detalhes da Perda</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Data da Perda:</strong> {{ perdido.data_perda|date:"d/m/Y H:i" }}</p>
+                        <p><strong>Local:</strong> {{ perdido.local_perda }}</p>
+                        {% if perdido.recompensa %}
+                        <p><strong>Recompensa:</strong> 
+                            <span class="badge bg-success fs-6">R$ {{ perdido.recompensa }}</span>
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {% if perdido.contato_emergencia %}
+                        <p><strong>Contato:</strong> {{ perdido.contato_emergencia }}</p>
+                        {% endif %}
+                        {% if perdido.whatsapp %}
+                        <p><strong>WhatsApp:</strong> 
+                            <a href="https://wa.me/55{{ perdido.whatsapp|cut:' '|cut:'('|cut:')'|cut:'-' }}" 
+                               class="btn btn-success btn-sm" target="_blank">
+                                <i class="fab fa-whatsapp me-1"></i>{{ perdido.whatsapp }}
+                            </a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>Descrição:</strong> {{ perdido.descricao }}
+                </div>
+                
+                {% if perdido.animal.caracteristicas %}
+                <div class="alert alert-warning">
+                    <strong>Características Especiais:</strong> {{ perdido.animal.caracteristicas }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Avistamentos -->
+        {% if avistamentos %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Avistamentos ({{ avistamentos.count }})
+                </h5>
+            </div>
+            <div class="card-body">
+                {% for avistamento in avistamentos %}
+                <div class="border-bottom pb-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>{{ avistamento.local }}</h6>
+                            <p class="text-muted mb-1">
+                                <i class="fas fa-clock me-1"></i>{{ avistamento.data_avistamento|naturaltime }}
+                                <span class="ms-3">
+                                    <i class="fas fa-user me-1"></i>{{ avistamento.usuario.get_full_name|default:avistamento.usuario.username }}
+                                </span>
+                            </p>
+                            <p>{{ avistamento.descricao }}</p>
+                            {% if avistamento.contato %}
+                            <p><strong>Contato:</strong> {{ avistamento.contato }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            {% if avistamento.foto %}
+                            <img src="{{ avistamento.foto.url }}" class="img-fluid rounded" alt="Foto do avistamento">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Ações</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'reportar_avistamento' perdido.pk %}" class="btn btn-success">
+                        <i class="fas fa-map-marker-alt me-2"></i>Reportar Avistamento
+                    </a>
+                    {% if perdido.whatsapp %}
+                    <a href="https://wa.me/55{{ perdido.whatsapp|cut:' '|cut:'('|cut:')'|cut:'-' }}" 
+                       class="btn btn-primary" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>Contatar no WhatsApp
+                    </a>
+                    {% endif %}
+                    <button onclick="if(navigator.share) navigator.share({title: '{{ perdido.animal.nome }} está perdido!', url: window.location.href})" 
+                            class="btn btn-outline-primary">
+                        <i class="fas fa-share me-2"></i>Compartilhar
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <i class="fas fa-eye fa-2x text-muted mb-2"></i>
+                <h6>{{ perdido.visualizacoes }}</h6>
+                <p class="text-muted mb-0">Visualizações</p>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">Proprietário</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>{{ perdido.animal.proprietario.user.get_full_name }}</strong></p>
+                <p class="text-muted">{{ perdido.animal.proprietario.get_tipo_residencia_display }} {{ perdido.animal.proprietario.numero_residencia }}</p>
+                {% if perdido.animal.proprietario.telefone %}
+                <p><i class="fas fa-phone me-1"></i>{{ perdido.animal.proprietario.telefone }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'animais_perdidos' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Voltar para Lista
+        </a>
+    </div>
+</div>
+{% endblock %}
+
