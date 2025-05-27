@@ -130,17 +130,16 @@
                         </div>
                     </div>
                     
+                    <!-- UPLOAD CUSTOMIZADO PARA FOTO DE PERFIL -->
                     <div class="mb-3">
                         <label class="form-label">Foto do Perfil (opcional)</label>
-                        <!-- Upload customizado em português -->
-                        <div class="custom-file-wrapper">
-                            <input type="file" name="foto_perfil" id="foto_perfil" class="custom-file-input" 
-                                   accept="image/*" onchange="updateFileName(this)">
-                            <label for="foto_perfil" class="custom-file-label">
+                        <div class="custom-file-upload">
+                            <input type="file" name="foto_perfil" id="id_foto_perfil" class="custom-file-input" accept="image/*" onchange="updateProfilePhoto(this)">
+                            <label for="id_foto_perfil" class="custom-file-label">
                                 <span class="file-button">
-                                    <i class="fas fa-camera me-2"></i>Escolher Foto
+                                    <i class="fas fa-user-circle me-2"></i>Escolher Foto
                                 </span>
-                                <span class="file-text" id="file-text">Nenhuma foto selecionada</span>
+                                <span class="file-text" id="profile-file-info">Nenhuma foto selecionada</span>
                             </label>
                         </div>
                         <small class="form-text text-muted">Adicione uma foto opcional para seu perfil (JPG, PNG, máximo 5MB)</small>
@@ -169,8 +168,8 @@
 </div>
 
 <style>
-/* Estilo para upload customizado em português */
-.custom-file-wrapper {
+/* CSS para upload customizado */
+.custom-file-upload {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -195,10 +194,12 @@
     border-radius: 0.375rem;
     cursor: pointer;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 100%;
 }
 
 .custom-file-label:hover {
     border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .file-button {
@@ -213,6 +214,7 @@
     border: none;
     cursor: pointer;
     transition: background-color 0.15s ease-in-out;
+    white-space: nowrap;
 }
 
 .file-button:hover {
@@ -222,6 +224,10 @@
 .file-text {
     color: #6c757d;
     font-style: italic;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .file-text.has-file {
@@ -230,12 +236,13 @@
     font-weight: 500;
 }
 
-/* Responsive */
+/* Responsividade */
 @media (max-width: 576px) {
     .custom-file-label {
         flex-direction: column;
         align-items: stretch;
         text-align: center;
+        padding: 0.5rem;
     }
     
     .file-button {
@@ -243,46 +250,60 @@
         margin-bottom: 0.5rem;
         justify-content: center;
     }
+    
+    .file-text {
+        text-align: center;
+    }
+}
+
+/* Ocultar os inputs originais do Django */
+input[name="foto_perfil"]:not(.custom-file-input) {
+    display: none !important;
 }
 </style>
 
 <script>
-function updateFileName(input) {
-    const fileText = document.getElementById('file-text');
+function updateProfilePhoto(input) {
+    const fileInfo = document.getElementById('profile-file-info');
     
     if (input.files && input.files[0]) {
-        const fileName = input.files[0].name;
-        const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2); // MB
+        const file = input.files[0];
+        const fileName = file.name;
+        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
         
-        fileText.innerHTML = `<i class="fas fa-check-circle me-1"></i>${fileName} (${fileSize} MB)`;
-        fileText.className = 'file-text has-file';
+        // Validar tamanho (5MB máximo)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('A foto deve ter no máximo 5MB');
+            input.value = '';
+            fileInfo.innerHTML = 'Nenhuma foto selecionada';
+            fileInfo.className = 'file-text';
+            return;
+        }
+        
+        // Validar tipo
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor, selecione apenas arquivos de imagem');
+            input.value = '';
+            fileInfo.innerHTML = 'Nenhuma foto selecionada';
+            fileInfo.className = 'file-text';
+            return;
+        }
+        
+        fileInfo.innerHTML = `<i class="fas fa-check-circle me-1"></i>${fileName} (${fileSize} MB)`;
+        fileInfo.className = 'file-text has-file';
     } else {
-        fileText.innerHTML = 'Nenhuma foto selecionada';
-        fileText.className = 'file-text';
+        fileInfo.innerHTML = 'Nenhuma foto selecionada';
+        fileInfo.className = 'file-text';
     }
 }
 
-// Validação de arquivo
-document.getElementById('foto_perfil').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    
-    if (file) {
-        // Verificar tamanho (5MB máximo)
-        if (file.size > 5 * 1024 * 1024) {
-            alert('A foto deve ter no máximo 5MB');
-            e.target.value = '';
-            updateFileName(e.target);
-            return;
-        }
-        
-        // Verificar tipo
-        if (!file.type.startsWith('image/')) {
-            alert('Por favor, selecione apenas arquivos de imagem');
-            e.target.value = '';
-            updateFileName(e.target);
-            return;
-        }
-    }
+// Garantir que os campos funcionem corretamente
+document.addEventListener('DOMContentLoaded', function() {
+    // Ocultar inputs originais do Django se ainda estiverem visíveis
+    const originalInputs = document.querySelectorAll('input[name="foto_perfil"]:not(.custom-file-input)');
+    originalInputs.forEach(input => {
+        input.style.display = 'none';
+    });
 });
 </script>
 {% endblock %}

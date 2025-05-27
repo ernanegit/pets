@@ -1,15 +1,25 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Cadastrar Animal - CondoPets{% endblock %}
+{% block title %}Editar {{ animal.nome }} - CondoPets{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0"><i class="fas fa-paw me-2"></i>Cadastrar Novo Animal</h4>
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-edit me-2"></i>Editar {{ animal.nome }}
+                </h4>
             </div>
             <div class="card-body">
+                <!-- Mostrar foto atual se existir -->
+                {% if animal.foto %}
+                <div class="text-center mb-4">
+                    <img src="{{ animal.foto.url }}" class="img-thumbnail" style="max-height: 200px;" alt="{{ animal.nome }}">
+                    <p class="text-muted small mt-2">Foto atual de {{ animal.nome }}</p>
+                </div>
+                {% endif %}
+                
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
@@ -87,17 +97,39 @@
                     
                     <!-- UPLOAD CUSTOMIZADO EM PORTUGUÊS -->
                     <div class="mb-3">
-                        <label class="form-label">Foto do Animal</label>
+                        <label class="form-label">
+                            {% if animal.foto %}
+                                Alterar Foto
+                            {% else %}
+                                Adicionar Foto
+                            {% endif %}
+                        </label>
                         <div class="custom-file-upload">
                             <input type="file" name="foto" id="id_foto" class="custom-file-input" accept="image/*" onchange="updateFileName(this)">
                             <label for="id_foto" class="custom-file-label">
                                 <span class="file-button">
-                                    <i class="fas fa-camera me-2"></i>Escolher Foto
+                                    <i class="fas fa-camera me-2"></i>
+                                    {% if animal.foto %}
+                                        Alterar Foto
+                                    {% else %}
+                                        Escolher Foto
+                                    {% endif %}
                                 </span>
-                                <span class="file-text" id="file-info">Nenhuma foto selecionada</span>
+                                <span class="file-text" id="file-info">
+                                    {% if animal.foto %}
+                                        Foto atual mantida
+                                    {% else %}
+                                        Nenhuma foto selecionada
+                                    {% endif %}
+                                </span>
                             </label>
                         </div>
-                        <small class="form-text text-muted">Formatos aceitos: JPG, PNG, GIF (máximo 5MB)</small>
+                        <small class="form-text text-muted">
+                            {% if animal.foto %}
+                                Deixe em branco para manter a foto atual. 
+                            {% endif %}
+                            Formatos aceitos: JPG, PNG, GIF (máximo 5MB)
+                        </small>
                         {% if form.foto.errors %}
                             <div class="text-danger small">{{ form.foto.errors }}</div>
                         {% endif %}
@@ -148,10 +180,10 @@
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <a href="{% url 'meus_animais' %}" class="btn btn-secondary me-md-2">
-                            <i class="fas fa-arrow-left me-1"></i>Voltar
+                            <i class="fas fa-arrow-left me-1"></i>Cancelar
                         </a>
-                        <button type="submit" class="btn btn-pet">
-                            <i class="fas fa-save me-1"></i>Cadastrar Animal
+                        <button type="submit" class="btn btn-warning text-dark">
+                            <i class="fas fa-save me-1"></i>Salvar Alterações
                         </button>
                     </div>
                 </form>
@@ -202,7 +234,7 @@
     margin-right: 0.75rem;
     font-weight: 500;
     color: #fff;
-    background-color: #007bff;
+    background-color: #ffc107;
     border-radius: 0.25rem;
     border: none;
     cursor: pointer;
@@ -211,7 +243,7 @@
 }
 
 .file-button:hover {
-    background-color: #0056b3;
+    background-color: #e0a800;
 }
 
 .file-text {
@@ -268,7 +300,7 @@ function updateFileName(input) {
         if (file.size > 5 * 1024 * 1024) {
             alert('A foto deve ter no máximo 5MB');
             input.value = '';
-            fileInfo.innerHTML = 'Nenhuma foto selecionada';
+            fileInfo.innerHTML = '{% if animal.foto %}Foto atual mantida{% else %}Nenhuma foto selecionada{% endif %}';
             fileInfo.className = 'file-text';
             return;
         }
@@ -277,7 +309,7 @@ function updateFileName(input) {
         if (!file.type.startsWith('image/')) {
             alert('Por favor, selecione apenas arquivos de imagem');
             input.value = '';
-            fileInfo.innerHTML = 'Nenhuma foto selecionada';
+            fileInfo.innerHTML = '{% if animal.foto %}Foto atual mantida{% else %}Nenhuma foto selecionada{% endif %}';
             fileInfo.className = 'file-text';
             return;
         }
@@ -285,7 +317,7 @@ function updateFileName(input) {
         fileInfo.innerHTML = `<i class="fas fa-check-circle me-1"></i>${fileName} (${fileSize} MB)`;
         fileInfo.className = 'file-text has-file';
     } else {
-        fileInfo.innerHTML = 'Nenhuma foto selecionada';
+        fileInfo.innerHTML = '{% if animal.foto %}Foto atual mantida{% else %}Nenhuma foto selecionada{% endif %}';
         fileInfo.className = 'file-text';
     }
 }

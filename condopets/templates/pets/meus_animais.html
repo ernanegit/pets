@@ -15,36 +15,71 @@
 </div>
 
 {% if animais %}
-<div class="row">
+<!-- Grid responsivo melhorado -->
+<div class="pets-grid">
     {% for animal in animais %}
-    <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card pet-card">
+    <div class="pet-card card">
+        <!-- Container da imagem melhorado -->
+        <div class="pet-photo-container">
             {% if animal.foto %}
-            <img src="{{ animal.foto.url }}" class="card-img-top pet-photo" alt="{{ animal.nome }}">
+                <img src="{{ animal.foto.url }}" class="pet-photo" alt="{{ animal.nome }}">
             {% else %}
-            <div class="pet-photo bg-light d-flex align-items-center justify-content-center">
-                <i class="fas fa-paw fa-3x text-muted"></i>
-            </div>
+                <div class="pet-photo-placeholder">
+                    <i class="fas fa-paw fa-3x"></i>
+                </div>
             {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ animal.nome }}</h5>
-                <p class="card-text">
+        </div>
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ animal.nome }}</h5>
+            
+            <div class="card-text">
+                <!-- Badges com melhor espaçamento -->
+                <div class="mb-2">
                     <span class="badge bg-primary me-1">{{ animal.get_tipo_display }}</span>
                     <span class="badge bg-secondary me-1">{{ animal.get_sexo_display }}</span>
                     <span class="badge bg-info">{{ animal.get_porte_display }}</span>
-                </p>
-                <p class="card-text">
-                    <small class="text-muted">
-                        {% if animal.raca %}{{ animal.raca }} • {% endif %}
-                        {{ animal.idade_aproximada }} ano{{ animal.idade_aproximada|pluralize }}
-                    </small>
-                </p>
-                <div class="btn-group w-100" role="group">
-                    <a href="{% url 'animal_detail' animal.pk %}" class="btn btn-outline-primary">
+                </div>
+                
+                <!-- Informações do animal -->
+                <div class="text-muted small">
+                    {% if animal.raca %}
+                        <div><i class="fas fa-tag me-1"></i>{{ animal.raca }}</div>
+                    {% endif %}
+                    <div><i class="fas fa-palette me-1"></i>{{ animal.cor }}</div>
+                    <div><i class="fas fa-calendar me-1"></i>{{ animal.idade_aproximada }} ano{{ animal.idade_aproximada|pluralize }}</div>
+                    {% if animal.caracteristicas %}
+                        <div class="mt-1">
+                            <i class="fas fa-info-circle me-1"></i>
+                            {{ animal.caracteristicas|truncatechars:50 }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Botões de ação melhorados -->
+            <div class="btn-group-vertical w-100 mt-3" role="group">
+                <!-- Primeira linha de botões -->
+                <div class="btn-group w-100 mb-2" role="group">
+                    <a href="{% url 'animal_detail' animal.pk %}" class="btn btn-outline-primary btn-sm" title="Ver detalhes">
                         <i class="fas fa-eye"></i>
+                        <span class="d-none d-sm-inline ms-1">Detalhes</span>
                     </a>
-                    <a href="{% url 'reportar_perdido' animal.pk %}" class="btn btn-outline-danger">
-                        <i class="fas fa-exclamation-triangle"></i> Perdido
+                    <a href="{% url 'editar_animal' animal.pk %}" class="btn btn-outline-warning btn-sm" title="Editar informações">
+                        <i class="fas fa-edit"></i>
+                        <span class="d-none d-sm-inline ms-1">Editar</span>
+                    </a>
+                </div>
+                
+                <!-- Segunda linha de botões -->
+                <div class="btn-group w-100" role="group">
+                    <a href="{% url 'reportar_perdido' animal.pk %}" class="btn btn-outline-danger btn-sm" title="Reportar como perdido">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span class="d-none d-sm-inline ms-1">Perdido</span>
+                    </a>
+                    <a href="{% url 'deletar_animal' animal.pk %}" class="btn btn-outline-dark btn-sm" title="Remover animal" onclick="return confirm('Tem certeza que deseja remover {{ animal.nome }}?')">
+                        <i class="fas fa-trash"></i>
+                        <span class="d-none d-sm-inline ms-1">Remover</span>
                     </a>
                 </div>
             </div>
@@ -52,14 +87,185 @@
     </div>
     {% endfor %}
 </div>
+
 {% else %}
+<!-- Estado vazio melhorado -->
 <div class="text-center py-5">
-    <i class="fas fa-paw fa-5x text-muted mb-4"></i>
-    <h4>Você ainda não cadastrou nenhum animal</h4>
-    <p class="text-muted mb-4">Comece cadastrando seus pets para usar todas as funcionalidades do sistema</p>
+    <div class="mb-4">
+        <i class="fas fa-paw fa-5x text-muted mb-3"></i>
+        <h4>Você ainda não cadastrou nenhum animal</h4>
+        <p class="text-muted mb-4">Comece cadastrando seus pets para usar todas as funcionalidades do sistema</p>
+    </div>
     <a href="{% url 'cadastrar_animal' %}" class="btn btn-pet btn-lg">
         <i class="fas fa-plus me-2"></i>Cadastrar Primeiro Animal
     </a>
 </div>
 {% endif %}
+
+<style>
+/* CSS específico para esta página */
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.pet-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.pet-photo-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.pet-card:hover .pet-photo {
+    transform: scale(1.05);
+}
+
+.pet-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+}
+
+.pet-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+}
+
+.pet-card .card-text {
+    flex: 1;
+}
+
+.pet-card .btn-group-vertical {
+    margin-top: auto;
+}
+
+/* Melhorar botões em telas pequenas */
+@media (max-width: 768px) {
+    .pets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+    
+    .pet-photo-container {
+        height: 200px;
+    }
+    
+    .btn-group .btn span {
+        display: none !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .pets-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pet-photo-container {
+        height: 180px;
+    }
+    
+    .pet-card .card-body {
+        padding: 1rem;
+    }
+    
+    /* Empilhar botões verticalmente em celular */
+    .btn-group {
+        flex-direction: column !important;
+    }
+    
+    .btn-group .btn {
+        border-radius: 0.375rem !important;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Animações para botões */
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}
+
+.btn-outline-dark:hover {
+    background-color: #495057;
+    border-color: #495057;
+}
+
+/* Badge de status para animais perdidos (futuro) */
+.status-perdido {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+}
+</style>
+
+<!-- JavaScript para confirmações -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Confirmação para remoção com mais detalhes
+    const deleteLinks = document.querySelectorAll('a[href*="/deletar/"]');
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const animalName = this.getAttribute('title').replace('Remover animal', '').trim();
+            
+            if (confirm(`Tem certeza que deseja remover este animal?\n\nEsta ação irá:\n• Remover da sua lista\n• Cancelar alertas de perdido\n• Manter no histórico do sistema\n\nProsseguir?`)) {
+                window.location.href = this.href;
+            }
+        });
+    });
+    
+    // Tooltip para botões em dispositivos móveis
+    if (window.innerWidth <= 768) {
+        const buttons = document.querySelectorAll('.btn[title]');
+        buttons.forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                // Pequeno feedback tátil
+                if (navigator.vibrate) {
+                    navigator.vibrate(10);
+                }
+            });
+        });
+    }
+});
+</script>
 {% endblock %}

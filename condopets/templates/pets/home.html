@@ -65,39 +65,55 @@
     </div>
 </div>
 
-<div class="row">
+<!-- Grid melhorado para animais perdidos -->
+<div class="pets-grid">
     {% for perdido in animais_perdidos %}
-    <div class="col-md-4 mb-4">
-        <div class="card pet-card">
-            <div class="position-relative">
-                {% if perdido.animal.foto %}
-                <img src="{{ perdido.animal.foto.url }}" class="card-img-top pet-photo" alt="{{ perdido.animal.nome }}">
-                {% else %}
-                <div class="pet-photo bg-light d-flex align-items-center justify-content-center">
-                    <i class="fas fa-paw fa-3x text-muted"></i>
+    <div class="pet-card card">
+        <div class="pet-photo-container">
+            {% if perdido.animal.foto %}
+                <img src="{{ perdido.animal.foto.url }}" class="pet-photo" alt="{{ perdido.animal.nome }}">
+            {% else %}
+                <div class="pet-photo-placeholder">
+                    <i class="fas fa-paw fa-3x"></i>
                 </div>
-                {% endif %}
-                <span class="badge bg-danger status-badge">PERDIDO</span>
+            {% endif %}
+            <span class="badge bg-danger status-badge">PERDIDO</span>
+        </div>
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ perdido.animal.nome }}</h5>
+            
+            <div class="card-text">
+                <div class="mb-2">
+                    <span class="badge bg-primary me-1">{{ perdido.animal.get_tipo_display }}</span>
+                    {% if perdido.animal.raca %}
+                    <span class="badge bg-secondary">{{ perdido.animal.raca }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="text-muted small">
+                    <div><i class="fas fa-map-marker-alt me-1"></i>{{ perdido.local_perda|truncatechars:30 }}</div>
+                    <div><i class="fas fa-clock me-1"></i>{{ perdido.data_perda|timesince }} atrás</div>
+                    {% if perdido.recompensa %}
+                    <div class="mt-2">
+                        <span class="badge bg-success">
+                            <i class="fas fa-gift me-1"></i>R$ {{ perdido.recompensa }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ perdido.animal.nome }}</h5>
-                <p class="card-text">
-                    <small class="text-muted">
-                        <i class="fas fa-map-marker-alt me-1"></i>{{ perdido.local_perda }}
-                        <br>
-                        <i class="fas fa-clock me-1"></i>{{ perdido.data_perda|timesince }} atrás
-                    </small>
-                </p>
-                <div class="d-grid">
-                    <a href="{% url 'animal_perdido_detail' perdido.pk %}" class="btn btn-outline-danger">
-                        <i class="fas fa-eye me-1"></i>Ver Detalhes
-                    </a>
-                </div>
+            
+            <div class="d-grid">
+                <a href="{% url 'animal_perdido_detail' perdido.pk %}" class="btn btn-outline-danger">
+                    <i class="fas fa-eye me-1"></i>Ver Detalhes
+                </a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
+
 {% else %}
 <div class="alert alert-success text-center">
     <i class="fas fa-check-circle fa-2x mb-3"></i>
@@ -128,4 +144,111 @@
         </div>
     </div>
 </div>
+
+<style>
+/* CSS específico para a home */
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.pet-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.pet-photo-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.pet-card:hover .pet-photo {
+    transform: scale(1.05);
+}
+
+.pet-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+}
+
+.pet-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+}
+
+.pet-card .card-text {
+    flex: 1;
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lost-pet-banner {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .pets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+    
+    .pet-photo-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pets-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pet-photo-container {
+        height: 200px;
+    }
+}
+</style>
 {% endblock %}

@@ -80,6 +80,54 @@ def cadastrar_animal(request):
     
     return render(request, 'pets/cadastrar_animal.html', {'form': form})
 
+@login_required
+def editar_animal(request, pk):
+    """Editar um animal específico"""
+    try:
+        morador = Morador.objects.get(user=request.user)
+        animal = get_object_or_404(Animal, pk=pk, proprietario=morador, ativo=True)
+    except Morador.DoesNotExist:
+        messages.error(request, 'Você precisa completar seu cadastro de morador primeiro.')
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = AnimalForm(request.POST, request.FILES, instance=animal)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'{animal.nome} foi atualizado com sucesso!')
+            return redirect('meus_animais')
+    else:
+        form = AnimalForm(instance=animal)
+    
+    return render(request, 'pets/editar_animal.html', {
+        'form': form, 
+        'animal': animal
+    })
+
+@login_required
+def deletar_animal(request, pk):
+    """Deletar um animal específico"""
+    try:
+        morador = Morador.objects.get(user=request.user)
+        animal = get_object_or_404(Animal, pk=pk, proprietario=morador, ativo=True)
+    except Morador.DoesNotExist:
+        messages.error(request, 'Você precisa completar seu cadastro de morador primeiro.')
+        return redirect('home')
+    
+    if request.method == 'POST':
+        nome_animal = animal.nome
+        # Marcar como inativo em vez de deletar permanentemente
+        animal.ativo = False
+        animal.save()
+        
+        # Também marcar como inativo quaisquer alertas de perdido
+        AnimalPerdido.objects.filter(animal=animal, status='perdido').update(status='cancelado')
+        
+        messages.success(request, f'{nome_animal} foi removido com sucesso!')
+        return redirect('meus_animais')
+    
+    return render(request, 'pets/deletar_animal.html', {'animal': animal})
+
 def animal_detail(request, pk):
     """Detalhes de um animal específico"""
     animal = get_object_or_404(Animal, pk=pk, ativo=True)
@@ -186,7 +234,7 @@ def criar_notificacao_animal_perdido(perdido):
             usuario=morador.user,
             tipo='animal_perdido',
             titulo=f'{perdido.animal.nome} está perdido',
-            mensagem=f'O {perdido.animal.get_tipo_display().lower()} {perdido.animal.nome} do apartamento {perdido.animal.proprietario.apartamento} está perdido.',
+            mensagem=f'O {perdido.animal.get_tipo_display().lower()} {perdido.animal.nome} do {perdido.animal.proprietario.get_tipo_residencia_display()} {perdido.animal.proprietario.numero_residencia} está perdido.',
             link=f'/perdidos/{perdido.pk}/'
         )
 

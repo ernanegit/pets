@@ -21,6 +21,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
     background: #0056b3;
 }
 
+
 /* Para Firefox */
 input[type="file"]::-moz-file-upload-button {
     background: #007bff;
@@ -79,4 +80,140 @@ input[type="file"]::-moz-file-upload-button {
 
 .upload-custom .btn-file:hover {
     background: #0056b3;
+}
+
+/* CSS melhorado para cards dos pets - Adicione no base.html ou crie um arquivo CSS separado */
+
+.pet-card {
+    transition: transform 0.2s;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: 100%; /* Para cards com altura uniforme */
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Melhorar o container das imagens */
+.pet-photo-container {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Altura fixa maior */
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantém proporção sem distorcer */
+    object-position: center; /* Centraliza a imagem */
+    transition: transform 0.3s ease;
+}
+
+.pet-card:hover .pet-photo {
+    transform: scale(1.05); /* Efeito zoom suave no hover */
+}
+
+/* Placeholder para pets sem foto */
+.pet-photo-placeholder {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    color: #6c757d;
+}
+
+/* Garantir que o card-body ocupe o espaço restante */
+.pet-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+}
+
+/* Melhorar o layout do conteúdo do card */
+.pet-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #495057;
+}
+
+.pet-card .card-text {
+    margin-bottom: 0.75rem;
+    flex: 1; /* Ocupa espaço disponível */
+}
+
+/* Botões sempre no final do card */
+.pet-card .btn-group {
+    margin-top: auto; /* Empurra os botões para baixo */
+}
+
+/* Status badge melhorado */
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 768px) {
+    .pet-photo-container {
+        height: 200px; /* Menor em telas pequenas */
+    }
+    
+    .pet-photo-placeholder {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pet-photo-container {
+        height: 180px; /* Ainda menor em celulares */
+    }
+    
+    .pet-photo-placeholder {
+        height: 180px;
+    }
+    
+    .pet-card .card-body {
+        padding: 1rem; /* Menos padding em telas pequenas */
+    }
+}
+
+/* Grid responsivo para os cards */
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .pets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .pets-grid {
+        grid-template-columns: 1fr; /* Uma coluna em celulares */
+        gap: 1rem;
+    }
 }
